@@ -23,11 +23,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
 
         mLogin.setOnClickListener(this);
+        mJoin.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        if(v == mLogin){
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
+        startActivity(intent);}
+        if (v == mJoin){
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+            startActivity(intent);}
+        }
     }
-}
+
