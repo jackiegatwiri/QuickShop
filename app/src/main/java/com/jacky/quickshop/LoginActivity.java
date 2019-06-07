@@ -2,6 +2,7 @@ package com.jacky.quickshop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -23,6 +24,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @BindView(R.id.forgotPassword) TextView mForgotPassword;
     @BindView(R.id.loginbutton) Button mLogin;
     private FirebaseAuth firebaseAuth;
+    private ProgressDialog loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ButterKnife.bind(this);
         mLogin.setOnClickListener(this);
         firebaseAuth = FirebaseAuth.getInstance();
+        loading = new ProgressDialog(this);
 
     }
     public boolean validation() {
@@ -59,6 +62,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void loginUser() {
+        loading.setTitle("Create Account");
+        loading.setMessage("Verification");
+        loading.setCanceledOnTouchOutside(false);
+        loading.show();
 
         String email = mEmail.getText().toString().trim();
         String password = mPassword.getText().toString().trim();
@@ -66,7 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if(task.isSuccessful()){
                 String emails = mEmail.getText().toString();
                 Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, CategoryActivity.class);
                 intent.putExtra("emails", emails);
                 startActivity(intent);
             }
